@@ -22,7 +22,209 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+## Usage
+
+The library needs to be configured with a *merchant Id* & *API key*. You can get it by contacting [webirr.com](https://webirr.com)
+
+> You can use this library for production or test environments. you will need to set is_test_env=true for test, and false for production apps when creating objects of class WeBirrClient
+
+## Examples
+### Creating a new Bill / Updating an existing Bill on WeBirr Servers
+
+```rb
+require 'bill'
+require 'webirr_client'
+
+# Create & Update Bill
+def create_bill
+    api_key = 'YOUR_API_KEY'
+    merchant_id = 'YOUR_MERCHANT_ID'
+
+    # client to use test envionment
+    webirr_client = WeBirrClient.new(api_key, true)
+
+    bill = Bill.new
+    bill.amount = "120.45"
+    bill.customer_code = "C001" # it can be email address or phone number if you dont have customer code
+    bill.customer_name = "Yohannes Aregay Hailu"
+    bill.time = "2022-09-06 14:20:26" # your bill time, always in this format
+    bill.description = "Food delivery"
+    bill.bill_reference = "ruby/2022/001" # your unique reference number
+    bill.merchant_id = merchant_id
+
+    puts "\nCreating Bill..."
+
+    res = webirr_client.create_bill(bill)
+
+    if (res["error"].blank?)
+        # success
+        payment_code = res["res"]  # returns paymentcode such as 429 723 975
+        puts "\nPayment Code = #{payment_code}" # we may want to save payment code in local db.
+    else
+        # fail
+        puts "\nerror: #{res["error"]}"
+        puts "\nerrorCode: #{res["errorCode"]}" # can be used to handle specific busines error such as ERROR_INVLAID_INPUT_DUP_REF
+    end
+
+    #pp res
+
+    # Update existing bill if it is not paid
+    bill.amount = "278.00"
+    bill.customer_name = 'John ruby'
+    #bill.bill_reference = "WE CAN NOT CHANGE THIS"
+
+    puts "\nUpdating Bill..."
+
+    res = webirr_client.update_bill(bill)
+
+    if (res["error"].blank?)
+        # success
+        puts "\nbill is updated succesfully" #res.res will be 'OK'  no need to check here!
+    else
+        # fail
+        puts "\nerror: #{res["error"]}"
+        puts "\nerrorCode: #{res["errorCode"]}" # can be used to handle specific busines error such as ERROR_INVLAID_INPUT
+    end
+end
+
+create_bill()
+
+```
+
+
+### Getting Payment status of an existing Bill from WeBirr Servers
+
+```rb
+require 'bill'
+require 'webirr_client'
+
+# Get Payment Status of Bill
+def get_webirr_payment_status
+    api_key = 'YOUR_API_KEY'
+    merchant_id = 'YOUR_MERCHANT_ID'
+
+    # client to use test envionment
+    webirr_client = WeBirrClient.new(api_key, true)
+
+    payment_code = 'PAYMENT_CODE_YOU_SAVED_AFTER_CREATING_A_NEW_BILL'  # suchas as '141 263 782'
+
+    puts "\nGetting Payment Status..."
+
+    res = webirr_client.get_payment_status(payment_code)
+
+    if (res["error"].blank?) 
+        # success
+        if (res["res"]["status"] == 2)
+          data =  res["res"]["data"]
+          puts "\nbill is paid"
+          puts "\nbill payment detail"
+          puts "\nBank: #{data["bankID"]}"
+          puts "\nBank Reference Number: #{data["paymentReference"]}"
+          puts "\nAmount Paid: #{data["amount"]}"
+        else
+          puts "\nbill is pending payment"
+        end
+    else
+        # fail
+        puts "\nerror: #{res["error"]}"
+        puts "\nerrorCode: #{res["errorCode"]}" # can be used to handle specific busines error such as ERROR_INVLAID_INPUT
+    end
+
+    #pp res
+end
+
+get_webirr_payment_status()
+
+```
+
+*Sample object returned from get_payment_status()*
+
+```javascript
+{
+  error: null,
+  res: {
+    status: 2,
+    data: {
+      id: 111112347,
+      paymentReference: '8G3303GHJN',      
+      confirmed: true,
+      confirmedTime: '2021-07-03 10:25:35',
+      bankID: 'cbe_birr',
+      time: '2021-07-03 10:25:33',
+      amount: '4.60',
+      wbcCode: '624 549 955'
+    }
+  },
+  errorCode: null
+}
+
+```
+
+### Getting Payment status of an existing Bill from WeBirr Servers
+
+```rb
+require 'bill'
+require 'webirr_client'
+
+// Get Payment Status of Bill
+def get_webirr_payment_status
+    api_key = 'YOUR_API_KEY'
+    merchant_id = 'YOUR_MERCHANT_ID'
+
+    webirr_client = WeBirrClient.new(api_key, true)
+
+    payment_code = 'PAYMENT_CODE_YOU_SAVED_AFTER_CREATING_A_NEW_BILL'  // suchas as '141 263 782'
+
+    puts "\nGetting Payment Status..."
+
+    res = webirr_client.get_payment_status(payment_code)
+
+    if (res["error"].blank?) 
+        # success
+        if (res["res"]["status"] == 2)
+          data =  res["res"]["data"]
+          puts "\nbill is paid"
+          puts "\nbill payment detail"
+          puts "\nBank: #{data["bankID"]}"
+          puts "\nBank Reference Number: #{data["paymentReference"]}"
+          puts "\nAmount Paid: #{data["amount"]}"
+        else
+          puts "\nbill is pending payment"
+        end
+    else
+        # fail
+        puts "\nerror: #{res["error"]}"
+        puts "\nerrorCode: #{res["errorCode"]}" # can be used to handle specific busines error such as ERROR_INVLAID_INPUT
+    end
+
+    //pp res
+end
+get_webirr_payment_status()
+
+```
+
+*Sample object returned from getPaymentStatus()*
+
+```javascript
+{
+  error: null,
+  res: {
+    status: 2,
+    data: {
+      id: 111112347,
+      paymentReference: '8G3303GHJN',      
+      confirmed: true,
+      confirmedTime: '2021-07-03 10:25:35',
+      bankID: 'cbe_birr',
+      time: '2021-07-03 10:25:33',
+      amount: '4.60',
+      wbcCode: '624 549 955'
+    }
+  },
+  errorCode: null
+}
+
+```
 
 ## Development
 
