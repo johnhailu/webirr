@@ -1,8 +1,8 @@
 # Webirr
 
-Official PHP Client Library for WeBirr Payment Gateway APIs
+Official Ruby gem for WeBirr Payment Gateway APIs
 
-This Client Library provides convenient access to WeBirr Payment Gateway APIs from PHP Applications.
+This gem provides convenient access to WeBirr Payment Gateway APIs from Ruby Applications.
 
 ## Installation
 
