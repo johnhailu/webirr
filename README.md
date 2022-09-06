@@ -1,8 +1,8 @@
 # Webirr
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/webirr`. To experiment with that code, run `bin/console` for an interactive prompt.
+Official PHP Client Library for WeBirr Payment Gateway APIs
 
-TODO: Delete this and the text above, and describe your gem
+This Client Library provides convenient access to WeBirr Payment Gateway APIs from PHP Applications.
 
 ## Installation
 
@@ -19,8 +19,6 @@ And then execute:
 Or install it yourself as:
 
     $ gem install webirr
-
-## Usage
 
 ## Usage
 
