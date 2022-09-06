@@ -44,6 +44,6 @@ RSpec.describe Webirr do
     bill.description = "Food delivery"
     bill.bill_reference = "ruby/2022/001"
     bill.merchant_id = "ruby"
-    return bill
+    bill
   end
 end

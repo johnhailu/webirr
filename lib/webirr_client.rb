@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "faraday"
 
 class WebirrClient
@@ -6,7 +8,7 @@ class WebirrClient
     @client =
       Faraday.new(
         url:
-          "#{is_test_env ? "https://api.webirr.com/" : "https://api.webirr.com:8080/"}",
+          (is_test_env ? "https://api.webirr.com/einvoice/api/" : "https://api.webirr.com:8080/einvoice/api/").to_s,
         params: {
           "api_key" => @api_key
         },
@@ -18,7 +20,7 @@ class WebirrClient
 
   def create_bill(bill)
     response =
-      @client.post("einvoice/api/postbill") { |req| req.body = bill.to_json }
+      @client.post("postbill") { |req| req.body = bill.to_json }
     if response.success?
       JSON.parse(response.body)
     else
@@ -28,7 +30,7 @@ class WebirrClient
 
   def update_bill(bill)
     response =
-      @client.put("einvoice/api/postbill") { |req| req.body = bill.to_json }
+      @client.put("postbill") { |req| req.body = bill.to_json }
     if response.success?
       JSON.parse(response.body)
     else
@@ -37,7 +39,7 @@ class WebirrClient
   end
 
   def delete_bill(payment_code)
-    response = @client.put("einvoice/api/deletebill?wbc_code=#{payment_code}")
+    response = @client.put("deletebill?wbc_code=#{payment_code}")
     if response.success?
       JSON.parse(response.body)
     else
@@ -47,7 +49,7 @@ class WebirrClient
 
   def get_payment_status(payment_code)
     response =
-      @client.get("einvoice/api/getPaymentStatus?wbc_code=#{payment_code}")
+      @client.get("getPaymentStatus?wbc_code=#{payment_code}")
     if response.success?
       JSON.parse(response.body)
     else

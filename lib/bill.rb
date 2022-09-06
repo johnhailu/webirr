@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "json"
 
 class Bill
@@ -9,7 +11,7 @@ class Bill
                 :merchant_id,
                 :time
 
-  def as_json(options = {})
+  def as_json(_options = {})
     {
       customerCode: @customer_code,
       customerName: @customer_name,
