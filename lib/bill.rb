@@ -11,12 +11,12 @@ class Bill
 
   def as_json(options = {})
     {
-      customer_code: @customer_code,
-      customer_name: @customer_name,
+      customerCode: @customer_code,
+      customerName: @customer_name,
       amount: @amount,
       description: @description,
-      bill_reference: @bill_reference,
-      merchant_id: @merchant_id,
+      billReference: @bill_reference,
+      merchantID: @merchant_id,
       time: @time
     }
   end

@@ -18,19 +18,19 @@ RSpec.describe Webirr do
   end
 
   it "#update_bill should get error from web service on invalid api key" do
-    client = WebirrClient.new("x", false)
+    client = WebirrClient.new("x", true)
     res = client.update_bill(sample_bill)
     expect(res["error"]).not_to be nil
   end
 
   it "#delete_bill should get error from web service on invalid api key" do
-    client = WebirrClient.new("x", false)
+    client = WebirrClient.new("x", true)
     res = client.delete_bill("abcd")
     expect(res["error"]).not_to be nil
   end
 
   it "#get_payment_status should get error from web service on invalid api key" do
-    client = WebirrClient.new("x", false)
+    client = WebirrClient.new("x", true)
     res = client.get_payment_status("abcd")
     expect(res["error"]).not_to be nil
   end
