@@ -35,6 +35,12 @@ RSpec.describe Webirr do
     expect(res["error"]).not_to be nil
   end
 
+  it "#get_stat should get error from web service on invalid api key" do
+    client = Webirr::Client.new("x", true)
+    res = client.get_stat
+    expect(res["error"]).not_to be nil
+  end
+
   def sample_bill
     bill = Webirr::Bill.new
     bill.amount = "120.45"
