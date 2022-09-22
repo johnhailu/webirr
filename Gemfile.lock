@@ -1,7 +1,8 @@
 PATH
   remote: .
   specs:
-    webirr (0.1.0)
+    webirr (0.1.5)
+      faraday (~> 2.5)
 
 GEM
   remote: https://rubygems.org/
@@ -53,7 +54,6 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  faraday (~> 2.5)
   rake (~> 13.0)
   rspec (~> 3.0)
   rubocop (~> 1.21)

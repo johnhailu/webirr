@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "webirr"
-require_relative "../lib/bill"
-require_relative "../lib/webirr_client"
+require_relative "../lib/webirr/bill"
+require_relative "../lib/webirr/webirr_client"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

@@ -24,14 +24,14 @@ Or install it yourself as:
 
 The library needs to be configured with a *merchant Id* & *API key*. You can get it by contacting [webirr.com](https://webirr.com)
 
-> You can use this library for production or test environments. you will need to set is_test_env=true for test, and false for production apps when creating objects of class WeBirrClient
+> You can use this library for production or test environments. you will need to set is_test_env=true for test, and false for production apps when creating objects of class WeBirr::Client
 
 ## Examples
 ### Creating a new Bill / Updating an existing Bill on WeBirr Servers
 
 ```rb
-require 'bill'
-require 'webirr_client'
+require 'webirr/bill'
+require 'webirr/webirr_client'
 
 # Create & Update Bill
 def create_bill
@@ -39,9 +39,9 @@ def create_bill
     merchant_id = 'YOUR_MERCHANT_ID'
 
     # client to use test envionment
-    webirr_client = WeBirrClient.new(api_key, true)
+    webirr_client = WeBirr::Client.new(api_key, true)
 
-    bill = Bill.new
+    bill = Webirr::Bill.new
     bill.amount = "120.45"
     bill.customer_code = "C001" # it can be email address or phone number if you dont have customer code
     bill.customer_name = "Yohannes Aregay Hailu"
@@ -93,8 +93,8 @@ create_bill()
 ### Getting Payment status of an existing Bill from WeBirr Servers
 
 ```rb
-require 'bill'
-require 'webirr_client'
+require 'webirr/bill'
+require 'webirr/webirr_client'
 
 # Get Payment Status of Bill
 def get_webirr_payment_status
@@ -102,7 +102,7 @@ def get_webirr_payment_status
     merchant_id = 'YOUR_MERCHANT_ID'
 
     # client to use test envionment
-    webirr_client = WeBirrClient.new(api_key, true)
+    webirr_client = WeBirr::Client.new(api_key, true)
 
     payment_code = 'PAYMENT_CODE_YOU_SAVED_AFTER_CREATING_A_NEW_BILL'  # suchas as '141 263 782'
 
@@ -161,15 +161,15 @@ get_webirr_payment_status()
 ### Getting Payment status of an existing Bill from WeBirr Servers
 
 ```rb
-require 'bill'
-require 'webirr_client'
+require 'webirr/bill'
+require 'webirr/webirr_client'
 
-// Get Payment Status of Bill
+// Get Payment Status of Webirr::Bill
 def get_webirr_payment_status
     api_key = 'YOUR_API_KEY'
     merchant_id = 'YOUR_MERCHANT_ID'
 
-    webirr_client = WeBirrClient.new(api_key, true)
+    webirr_client = WeBirr::Client.new(api_key, true)
 
     payment_code = 'PAYMENT_CODE_YOU_SAVED_AFTER_CREATING_A_NEW_BILL'  // suchas as '141 263 782'
 
