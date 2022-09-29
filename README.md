@@ -1,4 +1,5 @@
 # Webirr
+[![Gem Version](https://badge.fury.io/rb/webirr.svg)](https://badge.fury.io/rb/webirr)
 
 Official Ruby gem for WeBirr Payment Gateway APIs
 
