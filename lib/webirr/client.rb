@@ -58,8 +58,12 @@ module Webirr
       end
     end
 
-    def get_stat
-      response = @client.get("merchant/stat")
+    def get_stat(date_from: nil, date_to: nil)
+      if date_from.nil?
+        response = @client.get("merchant/stat")
+      else
+        response = @client.get("merchant/stat?date_from=#{date_from}&date_to#{date_to}")
+      end
       if response.success?
         JSON.parse(response.body)
       else
